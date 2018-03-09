@@ -1,0 +1,53 @@
+apply plugin: 'com.android.application'
+
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+android {
+    signingConfigs {
+        config {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.mittas.flashlight"
+        minSdkVersion 19
+        targetSdkVersion 25
+        versionCode 8
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+    }
+    buildTypes.each {
+        it.buildConfigField('String', 'ADMOB_APP_ID', keystoreProperties['AdmobAppID'])
+        it.buildConfigField('String', 'ADMOB_AD_UNIT_ID', keystoreProperties['AdmobAdUnitID'])
+        it.buildConfigField('String', 'BASE_64_ENCODED_PUBLIC_KEY', keystoreProperties['Base64EncodedPublicKey'])
+    }
+}
+
+dependencies {
+    implementation 'com.android.support:design:27.0.2'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:27.0.2'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:support-v4:27.0.2'
+    compile 'com.google.android.gms:play-services-ads:11.6.0'
+    compile 'com.android.billingclient:billing:1.0'
+    testCompile 'junit:junit:4.12'
+    // Custom NumberPicker
+    compile 'com.shawnlin:number-picker:2.4.4'
+}

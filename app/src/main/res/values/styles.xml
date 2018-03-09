@@ -1,0 +1,17 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <!--when the check box is checked -->
+        <item name="colorControlNormal">@color/colorPrimary</item>
+
+        <!--when the check box is unchecked -->
+        <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
+
+    <!-- Action bar theme -->
+    <style name="ActionBar.Flashlight" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:background">?attr/colorPrimary</item>
+    </style>
+
+</resources>
